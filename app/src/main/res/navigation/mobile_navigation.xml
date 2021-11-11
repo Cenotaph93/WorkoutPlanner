@@ -3,23 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_workout_plan">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="de.adue.workoutplanner.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_workout_plan"
+        android:name="de.adue.workoutplanner.ui.workoutplan.WorkoutPlanFragment"
+        android:label="@string/title_workout_plan"
+        tools:layout="@layout/fragment_workout_plan" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="de.adue.workoutplanner.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_statistics"
+        android:name="de.adue.workoutplanner.ui.dashboard.StatisticsFragment"
+        android:label="@string/title_statistics"
+        tools:layout="@layout/fragment_statistics" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="de.adue.workoutplanner.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>

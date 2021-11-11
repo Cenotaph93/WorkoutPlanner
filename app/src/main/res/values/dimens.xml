@@ -1,5 +1,18 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Base dimensions, 8 point grid -->
+    <dimen name="v_tiny">2dp</dimen>
+    <dimen name="v_small">4dp</dimen>
+    <dimen name="v_medium">8dp</dimen>
+    <dimen name="v_big">12dp</dimen>
+    <dimen name="v_large">16dp</dimen>
+    <dimen name="v_xtra_large">24dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="v_text_size_t6">6sp</dimen>
+    <dimen name="v_text_size_t5">12sp</dimen>
+    <dimen name="v_text_size_t4">14sp</dimen>
+    <dimen name="v_text_size_t3">16sp</dimen>
+    <dimen name="v_text_size_t2">24sp</dimen>
+    <dimen name="v_text_size_t1">32sp</dimen>
+
 </resources>
