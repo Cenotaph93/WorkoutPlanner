@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_workout_plan"
-        android:name="de.adue.workoutplanner.ui.workoutplan.WorkoutPlanFragment"
+        android:name="de.adue.workoutplanner.ui.workoutplan.ui.WorkoutPlanFragment"
         android:label="@string/title_workout_plan"
         tools:layout="@layout/fragment_workout_plan" />
 
