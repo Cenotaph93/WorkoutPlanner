@@ -1,9 +1,6 @@
 package de.adue.workoutplanner.data
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
 
 /**
  * Represents a workout plan consisting of 1 to n exercises.
@@ -15,7 +12,41 @@ data class WorkoutPlan(
 )
 
 /**
- * Represents a single exercise that can be part of a workout plan.
+ * Represents a subset of exercises in a workout plan.
+ */
+@Entity
+data class Split(
+    @PrimaryKey val splitId: Int,
+    val workoutPlanId: Int,
+    val name: String
+)
+
+/**
+ * Links splits to a workout plan in a one-to-many relationship.
+ * A workout can contain multiple splits
+ * but a split can only be part of one workout plan.
+ */
+data class WorkoutPlanWithSplits(
+    @Embedded val workoutPlan: WorkoutPlan,
+    @Relation(
+        parentColumn = "workoutId",
+        entityColumn = "workoutPlanId"
+    )
+    val splits: List<Split>
+)
+
+data class WorkoutPlanWithSplitsAndExercises(
+    @Embedded val workoutPlan: WorkoutPlan,
+    @Relation(
+        entity = Split::class,
+        parentColumn = "workoutId",
+        entityColumn = "splitId"
+    )
+    val splitsWithExercises: List<SplitWithExercises>
+)
+
+/**
+ * Represents a single exercise.
  */
 @Entity
 data class Exercise(
@@ -25,34 +56,26 @@ data class Exercise(
 )
 
 /**
- * Links exercises to a workout plan in a many-to-many relationship.
- * A workout can contain multiple exercises
- * and an exercise can be part of multiple workout plans (i.e. warm-up exercises)
- */
-@Entity(primaryKeys = ["workoutPlanId", "exerciseId"])
-data class WorkoutPlanExerciseCrossRef(
-    val workoutPlanId: Int,
-    val exerciseId: Int
-)
-
-/**
- * Represents a subset of exercises in a workout plan.
- */
-@Entity
-data class Split(
-    @PrimaryKey val splitId: Int,
-    val name: String
-)
-
-/**
- * Links Splits to Exercises, which have a many-to-many relationship.
- * An exercise can be part of multiple Splits (i.e. Cardio at the end of every split)
- * and a split can contain multiple exercises.
+ * Cross reference between splits and exercises.
  */
 @Entity(primaryKeys = ["splitId", "exerciseId"])
-data class ExerciseSplitCrossRef(
+data class SplitExercisesCrossRef(
     val splitId: Int,
     val exerciseId: Int
+)
+
+/**
+ * Links splits to exercises in a many-to-many relationship.
+ * A split can contain multiple exercises and an exercise can be part of multiple splits.
+ */
+data class SplitWithExercises(
+    @Embedded val split: Split,
+    @Relation(
+        parentColumn = "splitId",
+        entityColumn = "exerciseId",
+        associateBy = Junction(SplitExercisesCrossRef::class)
+    )
+    val exercises: List<Exercise>
 )
 
 /**
@@ -86,5 +109,5 @@ data class ExecutedExerciseWithSets(
         parentColumn = "executedExerciseId",
         entityColumn = "executionId"
     )
-    val playlists: List<Set>
+    val sets: List<Set>
 )
