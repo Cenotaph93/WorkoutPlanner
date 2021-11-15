@@ -6,6 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.workoutplan.ui.WorkoutPlanFragment">
 
+    <EditText
+        android:id="@+id/input_test_table"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/input_test_table"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_test_table"
+        android:text="Add"
+        />
+
+    <TextView
+        android:id="@+id/text_test_table"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_enter" />
+
+    <!--
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_plans"
         android:layout_width="match_parent"
@@ -13,5 +42,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /> -->
 </androidx.constraintlayout.widget.ConstraintLayout>

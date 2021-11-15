@@ -26,9 +26,19 @@ class WorkoutPlanFragment : Fragment() {
 
         _binding = FragmentWorkoutPlanBinding.inflate(inflater, container, false)
 
+        /*
         _binding?.recyclerviewPlans?.apply {
 
         }
+        */
+
+        _binding?.buttonEnter?.setOnClickListener {
+            _binding?.inputTestTable?.text?.toString()?.let {
+                workoutPlanViewModel.insertPlan(requireContext(), it)
+            }
+        }
+
+        // TODO read from db
 
         return binding?.root
     }
