@@ -7,7 +7,8 @@ import androidx.room.*
  */
 @Entity
 data class WorkoutPlan(
-    @PrimaryKey val workoutId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val workoutId: Int = 0,
     val name: String
 )
 
@@ -16,7 +17,8 @@ data class WorkoutPlan(
  */
 @Entity
 data class Split(
-    @PrimaryKey val splitId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val splitId: Int = 0,
     val workoutPlanId: Int,
     val name: String
 )
@@ -50,7 +52,8 @@ data class WorkoutPlanWithSplitsAndExercises(
  */
 @Entity
 data class Exercise(
-    @PrimaryKey val exerciseId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val exerciseId: Int = 0,
     val name: String,
     val isBodyweight: Boolean,
 )
@@ -83,7 +86,8 @@ data class SplitWithExercises(
  */
 @Entity
 data class Set(
-    @PrimaryKey val setId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val setId: Int = 0,
     val executionId: Int,
     val reps: Int,
     val weight: Float
@@ -94,7 +98,8 @@ data class Set(
  */
 @Entity
 data class ExecutedExercise(
-    @PrimaryKey val executedExerciseId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val executedExerciseId: Int = 0,
     val exerciseId: Int,
     val date: Long
 )

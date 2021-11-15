@@ -19,8 +19,8 @@ abstract class WorkoutPlanDao {
     abstract fun getWorkoutPlansWithExercises(): List<WorkoutPlanWithSplitsAndExercises>
 
     @Transaction
-    fun addSplitWithExercises() {
-        // TODO
+    open fun addSplitWithExercises(workoutPlanId: Int, name: String, exercises: List<Exercise>) {
+        insertSplit(workoutPlanId, name)
     }
 
     @Query("INSERT INTO split (workoutPlanId, name) VALUES (:workoutPlanId, :name)")
