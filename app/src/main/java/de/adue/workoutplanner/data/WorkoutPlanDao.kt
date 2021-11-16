@@ -22,8 +22,17 @@ abstract class WorkoutPlanDao {
     @Transaction
     open fun addSplitWithExercises(workoutPlanId: Int, name: String, exercises: List<Exercise>) {
         insertSplit(workoutPlanId, name)
+        exercises.forEach {
+            insertSplitExercises(0, it.exerciseId) // TODO get splitId from previously inserted split
+        }
     }
 
     @Query("INSERT INTO split (workoutPlanId, name) VALUES (:workoutPlanId, :name)")
     abstract fun insertSplit(workoutPlanId: Int, name: String)
+
+    @Insert
+    abstract fun insertExercise()
+
+    @Query("INSERT INTO SplitExercisesCrossRef (splitId, exerciseId) VALUES (:splitId, :exerciseId)")
+    abstract fun insertSplitExercises(splitId: Int, exerciseId: Int)
 }
