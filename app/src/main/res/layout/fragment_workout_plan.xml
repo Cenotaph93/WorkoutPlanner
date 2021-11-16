@@ -10,19 +10,40 @@
         android:id="@+id/input_test_table"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="Workout Plan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/input_test_exercise"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Exercise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_test_table" />
+
     <Button
-        android:id="@+id/button_enter"
+        android:id="@+id/button_add_plan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/input_test_table"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_add_exercise"
         app:layout_constraintBottom_toTopOf="@id/text_test_table"
         android:text="Add"
+        />
+
+    <Button
+        android:id="@+id/button_add_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/input_test_table"
+        app:layout_constraintStart_toEndOf="@id/button_add_plan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_test_table"
+        android:text="Add Exercise"
         />
 
     <TextView
@@ -32,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_enter" />
+        app:layout_constraintTop_toBottomOf="@id/button_add_plan" />
 
     <!--
     <androidx.recyclerview.widget.RecyclerView

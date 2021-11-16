@@ -1,8 +1,8 @@
 package de.adue.workoutplanner.ui.workoutplan
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.*
+import de.adue.workoutplanner.data.Exercise
 import de.adue.workoutplanner.data.WorkoutPlan
 import de.adue.workoutplanner.data.WorkoutPlanDatabase
 import kotlinx.coroutines.Dispatchers
@@ -10,13 +10,38 @@ import kotlinx.coroutines.launch
 
 class WorkoutPlanViewModel(application: Application) : AndroidViewModel(application) {
 
-    val workoutPlans: LiveData<List<WorkoutPlan>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getAll()
+    val workoutPlans: LiveData<List<WorkoutPlan>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getWorkoutPlans()
+    val exercises: LiveData<List<Exercise>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getExercises()
 
-    fun insertPlan(context: Context, name: String) {
+    fun insertPlan(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            WorkoutPlanDatabase.getInstance(context)
+            WorkoutPlanDatabase.getInstance(getApplication())
                 .workoutDao()
-                .insert(WorkoutPlan(name = name))
+                .insertWorkoutPlan(WorkoutPlan(name = name))
+        }
+    }
+
+    fun insertExercise(name: String, isBodyweight: Boolean = false) {
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkoutPlanDatabase.getInstance(getApplication())
+                .workoutDao()
+                .insertExercise(Exercise(name = name, isBodyweight = isBodyweight))
+        }
+    }
+
+    fun insertExercise(exercise: Exercise) {
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkoutPlanDatabase.getInstance(getApplication())
+                .workoutDao()
+                .insertExercise(exercise)
+        }
+    }
+
+    fun addSplitsWithExercises(name: String, exercises: List<Exercise>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkoutPlanDatabase.getInstance(getApplication())
+                .workoutDao()
+                .insertSplitWithExercises(0, name, exercises)
         }
     }
 }
