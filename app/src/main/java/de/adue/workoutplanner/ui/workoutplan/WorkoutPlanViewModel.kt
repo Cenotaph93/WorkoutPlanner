@@ -1,21 +1,16 @@
 package de.adue.workoutplanner.ui.workoutplan
 
+import android.app.Application
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import de.adue.workoutplanner.data.WorkoutPlan
 import de.adue.workoutplanner.data.WorkoutPlanDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WorkoutPlanViewModel : ViewModel() {
+class WorkoutPlanViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is workout plan fragment"
-    }
-    val text: LiveData<String> = _text
+    val workoutPlans: LiveData<List<WorkoutPlan>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getAll()
 
     fun insertPlan(context: Context, name: String) {
         viewModelScope.launch(Dispatchers.IO) {

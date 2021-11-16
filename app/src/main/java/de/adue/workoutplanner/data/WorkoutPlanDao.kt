@@ -1,5 +1,6 @@
 package de.adue.workoutplanner.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -12,7 +13,7 @@ abstract class WorkoutPlanDao {
     abstract fun delete(workoutPlan: WorkoutPlan)
 
     @Query("SELECT * FROM workoutplan")
-    abstract fun getAll(): List<WorkoutPlan>
+    abstract fun getAll(): LiveData<List<WorkoutPlan>>
 
     @Transaction
     @Query("SELECT * FROM workoutplan")

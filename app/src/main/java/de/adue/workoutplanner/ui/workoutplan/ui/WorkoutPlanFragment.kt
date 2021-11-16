@@ -38,7 +38,13 @@ class WorkoutPlanFragment : Fragment() {
             }
         }
 
-        // TODO read from db
+        workoutPlanViewModel.workoutPlans.observe(viewLifecycleOwner) {
+            var columns = ""
+            it.forEach { plan ->
+                columns += plan.name + "\n"
+            }
+            _binding?.textTestTable?.text = columns
+        }
 
         return binding?.root
     }
