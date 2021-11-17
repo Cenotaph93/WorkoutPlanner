@@ -3,6 +3,7 @@ package de.adue.workoutplanner.ui.workoutplan
 import android.app.Application
 import androidx.lifecycle.*
 import de.adue.workoutplanner.data.Exercise
+import de.adue.workoutplanner.data.SplitWithExercises
 import de.adue.workoutplanner.data.WorkoutPlan
 import de.adue.workoutplanner.data.WorkoutPlanDatabase
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,7 @@ class WorkoutPlanViewModel(application: Application) : AndroidViewModel(applicat
 
     val workoutPlans: LiveData<List<WorkoutPlan>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getWorkoutPlans()
     val exercises: LiveData<List<Exercise>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getExercises()
+    val splitsWithExercises: LiveData<List<SplitWithExercises>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getSplitsWithExercises()
 
     fun insertPlan(name: String) {
         viewModelScope.launch(Dispatchers.IO) {

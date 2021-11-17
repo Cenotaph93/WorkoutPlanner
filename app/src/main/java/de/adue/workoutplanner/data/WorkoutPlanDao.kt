@@ -8,19 +8,11 @@ abstract class WorkoutPlanDao {
     @Insert
     abstract fun insertWorkoutPlan(workoutPlan: WorkoutPlan)
 
-    // TODO: This will require more logic to delete the relationship between workout plans, exercises and so on
-    @Delete
-    abstract fun delete(workoutPlan: WorkoutPlan)
-
     @Query("SELECT * FROM workoutplan")
     abstract fun getWorkoutPlans(): LiveData<List<WorkoutPlan>>
 
     @Query("SELECT * FROM exercise")
     abstract fun getExercises(): LiveData<List<Exercise>>
-
-    @Transaction
-    @Query("SELECT * FROM workoutplan")
-    abstract fun getWorkoutPlansWithExercises(): List<WorkoutPlanWithSplitsAndExercises>
 
     @Transaction
     open fun insertSplitWithExercises(workoutPlanId: Int, name: String, exercises: List<Exercise>) {
@@ -42,4 +34,11 @@ abstract class WorkoutPlanDao {
 
     @Query("INSERT INTO SplitExercisesCrossRef (splitId, exerciseId) VALUES (:splitId, :exerciseId)")
     abstract fun insertSplitExercises(splitId: Int, exerciseId: Int)
+
+    @Query("SELECT * FROM Split "+
+            "JOIN SplitExercisesCrossRef ON Split.splitId = SplitExercisesCrossRef.splitId "+
+            "JOIN Exercise ON SplitExercisesCrossRef.exerciseId = Exercise.exerciseId"
+    )
+    abstract fun getSplitsWithExercises(): LiveData<List<SplitWithExercises>>
+
 }
