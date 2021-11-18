@@ -46,4 +46,16 @@ abstract class WorkoutPlanDao {
     )
     abstract fun getSplitsWithExercises(): LiveData<List<SplitWithExercises>>
 
+    @Insert
+    abstract fun insertExecutedExercise(executedExercise: ExecutedExercise)
+
+    @Insert
+    abstract fun insertSet(executedSet: ExecutedSet)
+
+    @Query(
+        "SELECT * FROM ExecutedExercise JOIN ExecutedSet " +
+                "ON ExecutedExercise.executedExerciseId = ExecutedSet.executionId " +
+                "GROUP BY ExecutedExercise.executedExerciseId"
+    )
+    abstract fun getExecutedExercisesWithSets(): LiveData<List<ExecutedExerciseWithSets>>
 }

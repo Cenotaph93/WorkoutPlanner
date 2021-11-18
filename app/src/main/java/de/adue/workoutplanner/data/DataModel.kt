@@ -85,7 +85,7 @@ data class SplitWithExercises(
  * Represents a single set of an executed exercise.
  */
 @Entity
-data class Set(
+data class ExecutedSet(
     @PrimaryKey(autoGenerate = true)
     val setId: Int = 0,
     val executionId: Int,
@@ -114,5 +114,5 @@ data class ExecutedExerciseWithSets(
         parentColumn = "executedExerciseId",
         entityColumn = "executionId"
     )
-    val sets: List<Set>
+    val executedSets: List<ExecutedSet>
 )
