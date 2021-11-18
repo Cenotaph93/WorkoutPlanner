@@ -1,7 +1,10 @@
 package de.adue.workoutplanner.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 abstract class WorkoutPlanDao {
@@ -35,9 +38,11 @@ abstract class WorkoutPlanDao {
     @Query("INSERT INTO SplitExercisesCrossRef (splitId, exerciseId) VALUES (:splitId, :exerciseId)")
     abstract fun insertSplitExercises(splitId: Int, exerciseId: Int)
 
-    @Query("SELECT * FROM Split "+
-            "JOIN SplitExercisesCrossRef ON Split.splitId = SplitExercisesCrossRef.splitId "+
-            "JOIN Exercise ON SplitExercisesCrossRef.exerciseId = Exercise.exerciseId"
+    @Query(
+        "SELECT * FROM Split " +
+                "JOIN SplitExercisesCrossRef ON Split.splitId = SplitExercisesCrossRef.splitId " +
+                "JOIN Exercise ON Exercise.exerciseId = SplitExercisesCrossRef.exerciseId " +
+                "GROUP BY Split.splitId"
     )
     abstract fun getSplitsWithExercises(): LiveData<List<SplitWithExercises>>
 
