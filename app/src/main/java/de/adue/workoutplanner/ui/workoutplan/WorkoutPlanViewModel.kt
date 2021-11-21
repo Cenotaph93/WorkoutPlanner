@@ -1,19 +1,25 @@
 package de.adue.workoutplanner.ui.workoutplan
 
 import android.app.Application
-import androidx.lifecycle.*
-import de.adue.workoutplanner.data.Exercise
-import de.adue.workoutplanner.data.SplitWithExercises
-import de.adue.workoutplanner.data.WorkoutPlan
-import de.adue.workoutplanner.data.WorkoutPlanDatabase
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import de.adue.workoutplanner.data.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WorkoutPlanViewModel(application: Application) : AndroidViewModel(application) {
 
-    val workoutPlans: LiveData<List<WorkoutPlan>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getWorkoutPlans()
-    val exercises: LiveData<List<Exercise>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getExercises()
-    val splitsWithExercises: LiveData<List<SplitWithExercises>> = WorkoutPlanDatabase.getInstance(application).workoutDao().getSplitsWithExercises()
+    val workoutPlans: LiveData<List<WorkoutPlan>> =
+        WorkoutPlanDatabase.getInstance(application).workoutDao().getWorkoutPlans()
+    val exercises: LiveData<List<Exercise>> =
+        WorkoutPlanDatabase.getInstance(application).workoutDao().getExercises()
+    val executedExercises: LiveData<List<ExecutedExercise>> =
+        WorkoutPlanDatabase.getInstance(application).workoutDao().getExecutedExercises()
+    val splitsWithExercises: LiveData<List<SplitWithExercises>> =
+        WorkoutPlanDatabase.getInstance(application).workoutDao().getSplitsWithExercises()
+    val executedExerciseWithSets: LiveData<List<ExecutedExerciseWithSets>> =
+        WorkoutPlanDatabase.getInstance(application).workoutDao().getExecutedExercisesWithSets()
 
     fun insertPlan(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,6 +50,28 @@ class WorkoutPlanViewModel(application: Application) : AndroidViewModel(applicat
             WorkoutPlanDatabase.getInstance(getApplication())
                 .workoutDao()
                 .insertSplitWithExercises(0, name, exercises)
+        }
+    }
+
+    fun addExecutedExercise(exerciseId: Int, date: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkoutPlanDatabase.getInstance(getApplication())
+                .workoutDao()
+                .insertExecutedExercise(ExecutedExercise(exerciseId = exerciseId, date = date))
+        }
+    }
+
+    fun addSet(executedExerciseId: Int, reps: Int, weight: Double) {
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkoutPlanDatabase.getInstance(getApplication())
+                .workoutDao()
+                .insertSet(
+                    ExecutedSet(
+                        executionId = executedExerciseId,
+                        reps = reps,
+                        weight = weight
+                    )
+                )
         }
     }
 }

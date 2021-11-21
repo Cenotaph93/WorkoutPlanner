@@ -90,7 +90,7 @@ data class ExecutedSet(
     val setId: Int = 0,
     val executionId: Int,
     val reps: Int,
-    val weight: Float
+    val weight: Double
 )
 
 /**
@@ -115,4 +115,14 @@ data class ExecutedExerciseWithSets(
         entityColumn = "executionId"
     )
     val executedSets: List<ExecutedSet>
+)
+
+data class ExecutedExerciseWithExercisesAndSets(
+    @Embedded val exercise: Exercise,
+    @Relation(
+        entity = Split::class,
+        parentColumn = "workoutId",
+        entityColumn = "splitId"
+    )
+    val splitsWithExercises: List<SplitWithExercises>
 )

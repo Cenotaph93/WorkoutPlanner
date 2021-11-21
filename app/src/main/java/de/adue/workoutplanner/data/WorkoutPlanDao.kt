@@ -49,6 +49,9 @@ abstract class WorkoutPlanDao {
     @Insert
     abstract fun insertExecutedExercise(executedExercise: ExecutedExercise)
 
+    @Query("SELECT * FROM ExecutedExercise")
+    abstract fun getExecutedExercises(): LiveData<List<ExecutedExercise>>
+
     @Insert
     abstract fun insertSet(executedSet: ExecutedSet)
 
